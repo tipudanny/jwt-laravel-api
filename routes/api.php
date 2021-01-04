@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Jwt\AuthController;
+use App\Http\Controllers\Jwt\CheckTokenController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -9,8 +10,10 @@ use Illuminate\Support\Facades\Route;
 });
 */
 
+Route::post('auth/checktoken', [CheckTokenController::class, 'isTokenValid']);
+
+Route::post('auth/login', [AuthController::class, 'login']);
 Route::group(['prefix' => 'auth','middleware'=>'jwt'], function () {
-    Route::post('login', [AuthController::class, 'login']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
