@@ -12,6 +12,9 @@ class CheckTokenController extends Controller
      */
     public function isTokenValid()
     {
-        return response()->json([ 'valid' => auth()->check() ]);
+        if(auth()->check()){
+            return response()->json([ 'valid' => 'authenticed' ]);
+        }
+        else return response()->json([ 'valid' =>  'unauthenticed']);
     }
 }

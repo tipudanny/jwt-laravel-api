@@ -1,0 +1,67 @@
+
+Login url : http://currier.api/api/auth/login
+method type: Post
+data formate:   {
+                    "email": "example@gmail.com",
+                    "password": "12345678"
+                }
+retuen : {
+              "access_token": "aVw.............",
+              "token_type": "bearer",
+              "expires_in": 3600
+          }
+
+Registration url: http://currier.api/api/auth/registration
+Method: Post
+Data Formate:
+            {
+                "name": "Nayeem",                   //required
+                "email": "nayeemthealga@gmail.com", //required
+                "phone": "01714245824",             //required
+                "dob": "05-07-1993",                //required || Formate: d-m-Y
+                "address": "Dhaka, Bangladesh",     //required
+                "user_type": "manager",             //nullable()
+                "user_branch": "",                  //nullable()
+                "delivary_rate": "",                //nullable()
+                "password": "12345678"              //required
+            }
+Return:
+        {
+            "message"=> "New User Create Successfully."
+        }
+
+Check Profile url: http://currier.api/api/auth/me
+method : http://currier.api/api/auth/me
+Data Formate:
+           {
+                "token": "access_token......"
+           }
+Return:
+        {
+            "id": 1,
+            "name": "Tipu",
+            "email": "tipu@gmail.com",
+            "phone": "01763497369",
+            "dob": "20/12/1994",
+            "address": "Dhaka, Bangladesh",
+            "user_type": "super-admin",
+            "user_branch": null,
+            "delivary_rate": null,
+            "email_verified_at": null,
+            "current_team_id": null,
+            "profile_photo_path": null,
+            "created_at": null,
+            "updated_at": null,
+            "profile_photo_url": "https://ui-avatars.com/api/?name=Tipu&color=7F9CF5&background=EBF4FF"
+        }
+
+Check Authentication url: http://currier.api/api/auth/checktoken
+Method: Post
+Data Formate:
+            {
+                "token": "access_token......"
+            }
+Return:
+        {
+            "valid": "authenticed"
+        }

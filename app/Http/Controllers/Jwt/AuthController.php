@@ -3,6 +3,10 @@
 namespace App\Http\Controllers\Jwt;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Registration;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -13,7 +17,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login','isTokenValid','registration']]);
     }
 
     /**
@@ -31,6 +35,51 @@ class AuthController extends Controller
 
         return $this->respondWithToken($token);
     }
+
+    /**
+     * Get a Registration a New User via JWT.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function registration(Registration $request)
+    {
+        if(auth()->check() && Auth::user()->user_type == 'super-admin'){
+            $request->user_type = $request->user_type;
+        }
+        else $request->user_type = 'customer';
+
+        $user = new User([
+            'name'          => $request->name,
+            'email'         => $request->email,
+            'phone'         => $request->phone,
+            'dob'           => $request->dob,
+            'address'       => $request->address,
+            'user_type'     => $request->user_type,
+            'user_branch'   => $request->user_branch,
+            'delivary_rate' => $request->delivary_rate,
+            'password'      => Hash::make($request->password),
+        ]);
+        $inserted = $user->save();
+        if ($inserted){
+            return response()->json(['message'=> 'New User Create Successfully.']);
+        }
+        else return response()->json(['message'=> 'User creation Failed !!']);
+    }
+
+
+    /**
+     * Get a Check JWT token isValid or not.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function isTokenValid()
+    {
+        if(auth()->check()){
+            return response()->json([ 'valid' => 'authenticed' ]);
+        }
+        else return response()->json([ 'valid' =>  'unauthenticed']);
+    }
+
 
     /**
      * Get the authenticated User.
@@ -51,7 +100,7 @@ class AuthController extends Controller
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Successfully logged out','code' => 'logout']);
     }
 
     /**

@@ -10,9 +10,10 @@ use Illuminate\Support\Facades\Route;
 });
 */
 
-Route::post('auth/checktoken', [CheckTokenController::class, 'isTokenValid']);
-
+Route::post('auth/checktoken', [AuthController::class, 'isTokenValid']);
 Route::post('auth/login', [AuthController::class, 'login']);
+Route::post('auth/registration', [AuthController::class, 'registration']);
+
 Route::group(['prefix' => 'auth','middleware'=>'jwt'], function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
