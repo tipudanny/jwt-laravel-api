@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Jwt\AuthController;
-use App\Http\Controllers\Jwt\CheckTokenController;
+use App\Http\Controllers\PickupOrderController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -18,4 +19,14 @@ Route::group(['prefix' => 'auth','middleware'=>'jwt'], function () {
     Route::post('logout', [AuthController::class, 'logout']);
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
+
+    // Profile Controller
+    Route::post('profile/update', [ProfileController::class, 'update']);
+    Route::post('profile/delete', [ProfileController::class, 'delete']);
+
+    //Pickup Order Controller
+    Route::post('pickup/order-create', [PickupOrderController::class, 'create']);
+    Route::post('pickup/order-update', [PickupOrderController::class, 'update']);
+    Route::post('pickup/order-cancel', [PickupOrderController::class, 'cancel']);
+
 });

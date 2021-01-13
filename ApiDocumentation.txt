@@ -1,5 +1,5 @@
 
-Login url : http://currier.api/api/auth/login
+1.  Login url : http://currier.api/api/auth/login
 method type: Post
 data formate:   {
                     "email": "example@gmail.com",
@@ -11,7 +11,7 @@ retuen : {
               "expires_in": 3600
           }
 
-Registration url: http://currier.api/api/auth/registration
+2.  Registration url: http://currier.api/api/auth/registration
 Method: Post
 Data Formate:
             {
@@ -30,7 +30,7 @@ Return:
             "message"=> "New User Create Successfully."
         }
 
-Check Profile url: http://currier.api/api/auth/me
+3.  Check Profile url: http://currier.api/api/auth/me
 method : http://currier.api/api/auth/me
 Data Formate:
            {
@@ -55,7 +55,7 @@ Return:
             "profile_photo_url": "https://ui-avatars.com/api/?name=Tipu&color=7F9CF5&background=EBF4FF"
         }
 
-Check Authentication url: http://currier.api/api/auth/checktoken
+4.  Check Authentication url: http://currier.api/api/auth/checktoken
 Method: Post
 Data Formate:
             {
@@ -65,3 +65,27 @@ Return:
         {
             "valid": "authenticed"
         }
+
+5.  Update Profile url: http://currier.api/api/auth/profile/update
+Method: Post
+Data Formate: {
+                  "id":4,                           // not required. if you admin then pass user id as id.
+                  "name": "Al-Mamun",               // required
+                  "email": "mamun@gmail.com",       // email can not change
+                  "phone": "01714245824",           // required
+                  "dob": "05-07-1993",              // required
+                  "address": "Rangpur, Bangladesh", //required
+                  "user_type": "customer",          // can not change
+                  "user_branch": "",                // not required
+                  "delivary_rate": ""               // not required
+              }
+return: 'message'=> 'Profile Update Successfully.'
+
+6.  Delete a Profile url: http://currier.api/api/auth/profile/delete
+Method: Post
+Data formate: {
+                  "id":21
+              }
+Return : 'message'=> 'Profile Delete Successfully.'
+
+
