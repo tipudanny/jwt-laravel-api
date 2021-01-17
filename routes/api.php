@@ -25,8 +25,9 @@ Route::group(['prefix' => 'auth','middleware'=>'jwt'], function () {
     Route::post('me', [AuthController::class, 'me']);
 
     // Profile Controller
-    Route::post('profile/update', [ProfileController::class, 'update']);
-    Route::post('profile/delete', [ProfileController::class, 'delete']);
+    Route::post('profile/update',   [ProfileController::class, 'update']);
+    Route::post('profile/changepassword', [ProfileController::class, 'passwordUpdate']);
+    Route::post('profile/delete',   [ProfileController::class, 'delete']);
 
     Route::group(['prefix' => 'pickup'], function () {
         //Pickup Order Controller

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PasswordChange;
 use App\Http\Requests\ProfileUpdate;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -24,14 +25,34 @@ class ProfileController extends Controller
         if(auth()->check() && Auth::user()->user_type == 'super-admin'){
             if ($request->id){
                 $user_id = $request->id;
-            }else $user_id = Auth::user()->id;
-        }
+            }
+        }else $user_id = Auth::user()->id;
         $user = User::findOrFail($user_id);
         $data =  $request->except('id','email','password');
         //return $user;
         $user->update($data);
         return response()->json(['message'=> 'Profile Update Successfully.']);
     }
+
+    /**
+     * Change  password by Admin and User himself.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+
+    public function passwordUpdate(PasswordChange $request){
+        if(auth()->check() && Auth::user()->user_type == 'super-admin'){
+            if ($request->user_id){
+                $user_id = $request->user_id;
+            }
+        }else $user_id = Auth::user()->id;
+        $user = User::findOrFail($user_id);
+        $data['password'] = Hash::make($request->password);
+        $user->update($data);
+        return response()->json(['message'=> 'Password Update Successfully.']);
+
+    }
+
 
     /**
      * Delete a Prfile by Admin.
