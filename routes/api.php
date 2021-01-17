@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Branch\BranchController;
 use App\Http\Controllers\Jwt\AuthController;
+use App\Http\Controllers\Order\OrderConfirmController;
+use App\Http\Controllers\Order\StatusController;
 use App\Http\Controllers\PickupOrderController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -24,9 +27,28 @@ Route::group(['prefix' => 'auth','middleware'=>'jwt'], function () {
     Route::post('profile/update', [ProfileController::class, 'update']);
     Route::post('profile/delete', [ProfileController::class, 'delete']);
 
-    //Pickup Order Controller
-    Route::post('pickup/order-create', [PickupOrderController::class, 'create']);
-    Route::post('pickup/order-update', [PickupOrderController::class, 'update']);
-    Route::post('pickup/order-cancel', [PickupOrderController::class, 'cancel']);
+    Route::group(['prefix' => 'pickup'], function () {
+        //Pickup Order Controller
+        Route::post('order-create', [PickupOrderController::class, 'create']);
+        Route::post('order-update', [PickupOrderController::class, 'update']);
+        Route::post('order-cancel', [PickupOrderController::class, 'cancel']);
+
+        //Pickup Order Status Controller
+        Route::post('status-update', [StatusController::class, 'statusUpdate']);
+        Route::post('assign-rider',  [StatusController::class, 'assignRider']);
+
+        //Pickup Order Status Controller
+        Route::post('order-deliver', [OrderConfirmController::class, 'orderDeliver']);
+    });
+
+    //Branch Controller
+    Route::group(['prefix' => 'branch','middleware'=>'admin'], function () {
+        Route::get('all-branch',  [BranchController::class, 'allBranch']);
+        Route::post('create',     [BranchController::class, 'create']);
+        Route::post('update',     [BranchController::class, 'update']);
+        Route::post('delete',     [BranchController::class, 'delete']);
+    });
+
+
 
 });
