@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Branch\BranchController;
 use App\Http\Controllers\Jwt\AuthController;
 use App\Http\Controllers\Order\OrderConfirmController;
@@ -39,6 +40,14 @@ Route::group(['prefix' => 'auth','middleware'=>'jwt'], function () {
 
         //Pickup Order Status Controller
         Route::post('order-deliver', [OrderConfirmController::class, 'orderDeliver']);
+    });
+
+    //Get all type of users
+    Route::group(['prefix' => 'admin','middleware'=>'admin'], function () {
+        Route::get('all-user',    [UserController::class, 'getAllUser']);
+        Route::get('managers',    [UserController::class, 'managers']);
+        Route::get('riders',      [UserController::class, 'riders']);
+        Route::get('customers',   [UserController::class, 'customers']);
     });
 
     //Branch Controller
