@@ -43,6 +43,9 @@ Route::group(['prefix' => 'auth','middleware'=>'jwt'], function () {
         Route::post('order-deliver', [OrderConfirmController::class, 'orderDeliver']);
     });
 
+    // Get Branch
+    Route::get('branch/all-branch',  [BranchController::class, 'allBranch']);
+
     //Get all type of users
     Route::group(['prefix' => 'admin','middleware'=>'admin'], function () {
         Route::get('all-user',    [UserController::class, 'getAllUser']);
@@ -53,7 +56,6 @@ Route::group(['prefix' => 'auth','middleware'=>'jwt'], function () {
 
     //Branch Controller
     Route::group(['prefix' => 'branch','middleware'=>'admin'], function () {
-        Route::get('all-branch',  [BranchController::class, 'allBranch']);
         Route::post('create',     [BranchController::class, 'create']);
         Route::post('update',     [BranchController::class, 'update']);
         Route::post('delete',     [BranchController::class, 'delete']);

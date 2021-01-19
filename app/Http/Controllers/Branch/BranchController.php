@@ -12,7 +12,7 @@ class BranchController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('admin');
+        $this->middleware('admin',['except' => ['allBranch']]);
     }
 
     /**
