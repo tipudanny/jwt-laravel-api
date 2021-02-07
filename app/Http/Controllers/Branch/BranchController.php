@@ -32,8 +32,9 @@ class BranchController extends Controller
     public function create(BranchCreate $request)
     {
         $data =  $request->all();
-        $branch = new Branch;
-        $branch->create($data);
+        /*$branch = new Branch;
+        $branch->create($data);*/
+        Branch::create($data);
         return response()->json(['message'=> 'New branch create successfully.']);
     }
     /**

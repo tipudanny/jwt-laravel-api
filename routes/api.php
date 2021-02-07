@@ -7,6 +7,7 @@ use App\Http\Controllers\Order\OrderConfirmController;
 use App\Http\Controllers\Order\StatusController;
 use App\Http\Controllers\PickupOrderController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TestController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Route;
     return $request->user();
 });
 */
+
+Route::get('image', [TestController::class, 'getImages']);
 
 Route::post('auth/checktoken', [AuthController::class, 'isTokenValid']);
 Route::post('auth/login', [AuthController::class, 'login']);
@@ -36,8 +39,10 @@ Route::group(['prefix' => 'auth','middleware'=>'jwt'], function () {
         Route::post('order-cancel', [PickupOrderController::class, 'cancel']);
 
         //Pickup Order Status Controller
-        Route::post('status-update', [StatusController::class, 'statusUpdate']);
-        Route::post('assign-rider',  [StatusController::class, 'assignRider']);
+        Route::get('all-order',         [StatusController::class, 'getOrder']);
+        Route::get('single-order-info/{id}', [StatusController::class, 'getSingleOrder'])->middleware(['management']);
+        Route::post('status-update',    [StatusController::class, 'statusUpdate']);
+        Route::post('assign-rider',     [StatusController::class, 'assignRider']);
 
         //Pickup Order Status Controller
         Route::post('order-deliver', [OrderConfirmController::class, 'orderDeliver']);

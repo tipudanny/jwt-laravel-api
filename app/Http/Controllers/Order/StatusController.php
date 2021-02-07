@@ -16,6 +16,28 @@ class StatusController extends Controller
     }
 
     /**
+     * Get all Pickup Order  .
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getOrder()
+    {
+        $orders = PickupOrder::where('user_id',Auth::id())->get();
+        return response()->json(['orders'=>$orders]);
+    }
+
+    /**
+     * Get Single Pickup Order info .
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function getSingleOrder($id)
+    {
+        $order = PickupOrder::with('user_order')->where('id',$id)->get();
+        return response()->json(['order'=>$order]);
+    }
+
+    /**
      * Pickup Order Status update .
      *
      * @return \Illuminate\Http\JsonResponse
@@ -26,8 +48,21 @@ class StatusController extends Controller
         $order = PickupOrder::findOrFail($request->order_id);
         $data =  $request->except('order_id');
         $data['updated_by'] = Auth::id();
-        $order->update($data);
-        return response()->json(['message'=> 'Shipment status update successful.']);
+
+        if (Auth::user()->user_type == 'customer' && $request->shipment_status == 'cancel')
+        {
+            $order->update($data);
+            return response()->json(['message'=> 'Shipment status update successful.']);
+        }
+        if (Auth::user()->user_type == 'customer' && $request->shipment_status != 'cancel')
+        {
+            return response()->json(['message'=> 'Error:: You are not Authorized.']);
+        }
+        else {
+            $order->update($data);
+            return response()->json(['message'=> 'Shipment status update successful.']);
+        }
+
     }
 
     /**

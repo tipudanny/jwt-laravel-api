@@ -35,8 +35,10 @@ class PickupOrder extends Model
         'remarks',
         'shipment_status',
         'assign_driver',
-        'created_by',
-        'updated_by',
         'order_info_updated_by'
     ];
+
+    public function user_order(){
+        return $this->belongsTo('App\Models\User','user_id');
+    }
 }
