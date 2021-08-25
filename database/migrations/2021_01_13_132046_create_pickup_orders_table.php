@@ -43,7 +43,7 @@ class CreatePickupOrdersTable extends Migration
             $table->date('delivery_date')->nullable();
             $table->decimal('user_income',10,2)->default(0);
             $table->string('remarks')->nullable();
-            $table->string('shipment_status')->default('0');
+            $table->string('shipment_status')->default('picked');
             $table->string('assign_driver')->default('0');
             $table->integer('created_by');
             $table->integer('updated_by')->default('0');

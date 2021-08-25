@@ -19,7 +19,7 @@ class PickupOrderController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function create(PickupOrderCreate $request)
+    public function create(PickupOrderCreate $request): \Illuminate\Http\JsonResponse
     {
         $new_pickup = new PickupOrder;
         $data = $request->all();
@@ -34,9 +34,10 @@ class PickupOrderController extends Controller
     /**
      * Update pickup Order by Admin and user himself.
      *
+     * @param PickupOrderUpdate $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function update(PickupOrderUpdate $request)
+    public function update(PickupOrderUpdate $request): \Illuminate\Http\JsonResponse
     {
         $data = $request->all();
         $order = PickupOrder::findOrFail($request->id);

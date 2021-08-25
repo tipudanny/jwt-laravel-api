@@ -11,7 +11,9 @@ trait OrderStatus
         if ($type)
         {
             return response()->json(PickupOrder::where('shipment_status',$type)->paginate(5));
-        }else return response()->json(PickupOrder::paginate(5));
+        }else {
+            return response()->json(PickupOrder::paginate(5));
+        }
 
     }
 
