@@ -35,7 +35,8 @@ class PickupOrder extends Model
         'remarks',
         'shipment_status',
         'assign_driver',
-        'order_info_updated_by'
+        'order_info_updated_by',
+        'created_by'
     ];
 
     public function user_order(){

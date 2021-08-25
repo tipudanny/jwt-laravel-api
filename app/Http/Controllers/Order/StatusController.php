@@ -5,14 +5,26 @@ namespace App\Http\Controllers\Order;
 use App\Http\Controllers\Controller;
 use App\Models\PickupOrder;
 use App\Models\User;
+use App\Traits\OrderStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class StatusController extends Controller
 {
+    use OrderStatus;
     public function __construct()
     {
         $this->middleware('jwt');
+    }
+    /*
+     * Get orders with search options
+     * @return \Illuminate\Http|JsonResponse
+     * */
+    public function index():object
+    {
+        $page = ( request()->get( 'page' ) ) ? request()->get( 'page' ) : 1;
+        $type = ( request()->get( 'type' ) ) ? request()->get( 'type' ) : null;
+        return $this->orders($type,$page);
     }
 
     /**

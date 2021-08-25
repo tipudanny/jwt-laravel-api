@@ -36,7 +36,7 @@ class CreatePickupOrdersTable extends Migration
 
             $table->string('delivery_type');
             $table->decimal('delivery_charge',10,2)->nullable();
-            $table->integer('delivery_charge_type')->nullable();
+            $table->string('delivery_charge_type')->nullable();
             $table->string('payment_status')->nullable();
             $table->string('delivery_charge_status')->nullable();
             $table->date('payment_date')->nullable();

@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Traits\UserInfo;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
 {
+    use UserInfo;
     public function __construct()
     {
         $this->middleware('admin');
@@ -18,9 +21,9 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function getAllUser()
+    public function getAllUser(Request $request)
     {
-        return response()->json(User::all()->except(Auth::id()));
+        return $this->getUsers($request->type);
     }
     /**
      * Get All managers Information.

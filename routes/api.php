@@ -34,6 +34,7 @@ Route::group(['prefix' => 'auth','middleware'=>'jwt'], function () {
 
     Route::group(['prefix' => 'pickup'], function () {
         //Pickup Order Controller
+        Route::get('orders',[StatusController::class,'index']);
         Route::post('order-create', [PickupOrderController::class, 'create']);
         Route::post('order-update', [PickupOrderController::class, 'update']);
         Route::post('order-cancel', [PickupOrderController::class, 'cancel']);
